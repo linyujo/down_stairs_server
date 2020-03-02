@@ -41,6 +41,10 @@ app.use(bodyParser());
 app.use(helmet());
 // app.use(helmet.referrerPolicy({ policy: 'same-origin' }));
 
+app.use(async ctx => {
+	ctx.body = "This is down_stairs server";
+});
+
 // websocket
 const server = http.createServer(app.callback());
 createWebSocket(server);
