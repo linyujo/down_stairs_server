@@ -49,4 +49,6 @@ app.use(async ctx => {
 const server = http.createServer(app.callback());
 createWebSocket(server);
 
-server.listen(4000, () => console.log(`已啟動PORT: ${4000}!`));
+let port = 4000;
+
+server.listen(port, async () => console.log(`已啟動PORT: ${port}!`));
