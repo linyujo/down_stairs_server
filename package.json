@@ -4,6 +4,9 @@
   "main": "index.js",
   "author": "raineLin",
   "license": "MIT",
+  "engines": {
+	  "node": ">= 10.15.2"
+  },
   "scripts": {
 	  "start": "node index.js"
   },
