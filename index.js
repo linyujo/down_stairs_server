@@ -4,6 +4,7 @@ const helmet = require("koa-helmet");
 const morgan = require('koa-morgan');
 const fs = require('fs');
 const http = require('http');
+const cors = require('koa2-cors');
 const createWebSocket = require('./sockets/index');
 
 // create a write stream (in append mode)
@@ -23,19 +24,25 @@ app.use(async (ctx, next) => {
 app.use(morgan('combined', {
 	stream: accessLogStream,
 }))
+app.use(cors({
+	origin: function(ctx) {
+		return 'https://goingdownstairs.netlify.com';
+	},
+	exposeHeaders: ['WWW-Authenticate', 'Server-Authorization'],
+	maxAge: 5,
+    credentials: true,
+    allowMethods: ['GET', 'POST', 'DELETE'],
+    allowHeaders: ['Content-Type', 'Authorization', 'Accept'],
+}));
 
 // req body編譯
 app.use(bodyParser());
 // 設定安全相關的http-header
 app.use(helmet());
-app.use(helmet.referrerPolicy({ policy: 'same-origin' }));
+// app.use(helmet.referrerPolicy({ policy: 'same-origin' }));
 
 // websocket
 const server = http.createServer(app.callback());
 createWebSocket(server);
-
-app.use(async (ctx) => {
-	ctx.body = 'Hello Koa2';
-});
 
 server.listen(4000, () => console.log(`已啟動PORT: ${4000}!`));
