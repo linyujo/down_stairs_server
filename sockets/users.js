@@ -54,7 +54,15 @@ const acceptBattleInvitation = (payload, client, io) => {
 
 	gameRooms[roomID].init();
 };
-const handleUserUpdate = (id, io, roomID) => {
+const handleCloseGame = (client, io, payload) => {
+	if (gameRooms[payload.roomID]) {
+		gameRooms[payload.roomID].unmount();
+		delete gameRooms[payload.roomID];
+	}
+	client.leave(payload.roomID);
+	handleUserUpdate(client.id, io);
+}
+const handleUserUpdate = (id, io, roomID = "") => {
 	connectedUsers.updateOneStatus(id, roomID);
 	io.sockets.emit('UPDATE_ONE_USER', {
 		user: connectedUsers.getOne(id)
@@ -81,5 +89,6 @@ export default {
 	sendBattleInvitation,
 	acceptBattleInvitation,
 	handleGameRivalUpdate,
+	handleCloseGame,
 	handleDisconnect
 };

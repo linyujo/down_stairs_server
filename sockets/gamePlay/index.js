@@ -24,6 +24,7 @@ class Game {
 		this.player1 = args.player1;
 		this.player2 = args.player2;
 		this.time = 0;
+		this.timeOut;
 	}
 	init = () => {
 		const { io, id } = this;	
@@ -37,16 +38,21 @@ class Game {
 			initStairConfigs: initStairConfigs,
 			initPlayerConfigs: initPlayerConfigs
 		});
-		this.start();
+		setTimeout(() => {
+			this.start();
+		}, 5000);
 	}
 	start = () => {
 		const { io, id } = this;
 		io.in(id).emit('GAME_START');
-		setInterval(this.update , 1000 / updateFPS);
+		this.timeOut = setInterval(this.update , 1000 / updateFPS);
 	}
 	update = () => {
 		this.time++;
 		this.createNewStair();
+	}
+	unmount = () => {
+		clearTimeout(this.timeOut);
 	}
 	initialStairs = () => {
 		let stairConfigs = [];

@@ -32,6 +32,10 @@ const createWebSocket = server => {
 			users.handleGameRivalUpdate(payload, client);
 		});
 
+		client.on('GAME_END', payload => {
+			users.handleCloseGame(client, io, payload);
+		});
+
 		client.on('disconnect', () => {
 			users.handleDisconnect(io, client);
 		});
