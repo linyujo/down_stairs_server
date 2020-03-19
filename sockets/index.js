@@ -20,7 +20,7 @@ const createWebSocket = server => {
 			users.handleToken(payload, io, client);
 		});
 
-		client.on('SEND_BATTLE_INVITATION', payload => {
+		client.on('BATTLE_INVITATION', payload => {
 			users.sendBattleInvitation(payload, client, io);
 		});
 

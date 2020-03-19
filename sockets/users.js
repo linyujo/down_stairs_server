@@ -1,5 +1,6 @@
 import sanitizeHtml from 'sanitize-html';
 import crypto from 'crypto'; // nodejs內建
+import cuid from 'cuid';
 
 import connectedUsers from './storages/ConnectedUsers';
 import gameRooms from './storages/gameRooms';
@@ -26,21 +27,18 @@ const handleToken = (payload, io, client) => {
 	});
 };
 const sendBattleInvitation = (payload, client, io) => {
-	const inviteeID = payload.inviteeID; // 受邀人
-	const inviter = connectedUsers.getOne(client.id); // 邀請人
-	const roomID = `${client.id}_${inviteeID}`; // 以 邀請人_受邀人 的id建立房間
+	const roomID = cuid();
 	client.join(roomID);
-	io.to(inviteeID).emit('RECEIVED_BATTLE_INVITATION', {
-		inviter: inviter
+	io.to(payload.to).emit('BATTLE_INVITATION', {
+		from: connectedUsers.getOne(client.id), // 邀請人
+		roomID: roomID
 	});
 };
 const acceptBattleInvitation = (payload, client, io) => {
-	const inviterID = payload.inviterID; // 邀請人
+	const inviterID = payload.to; // 邀請人
 	const inviteeID = client.id; // 受邀人
-	const roomID = `${inviterID}_${inviteeID}`;
-	client.join(roomID);
-	
-	io.to(inviterID).emit('ACCEPT_BATTLE_INVITATION');
+	const roomID = payload.roomID;
+	client.join(payload.roomID);
 
 	handleUserUpdate(inviterID, io, roomID);
 	handleUserUpdate(inviteeID, io, roomID);
