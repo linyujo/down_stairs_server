@@ -6,4 +6,4 @@ require("@babel/register")({
 });
   
 // Import the rest of our application.
-require('./server.js');
+require('./app/server.js');
