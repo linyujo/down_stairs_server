@@ -1,4 +1,4 @@
-import { do_Times, Vector2D, weightedRandom, shuffleArray } from '../../utils';
+import { do_Times, weightedRandom, shuffleArray } from '../../utils';
 
 const stairTypes = [
 	"normal",
@@ -8,8 +8,6 @@ const stairTypes = [
 	"jump",
 	"fade"
 ];
-
-const charTypes = [1, 2];
 
 const easyStairs = stairTypes.slice(0, 2);
 
@@ -60,10 +58,10 @@ class Game {
 		do_Times(5)(i => {
 			stairConfigs.push(
 				{
-					position: new Vector2D(
-						Math.random() * (gameWidth - 150) + 75, // 讓階梯集中中央
-						i * stairInterval + 100 // 階梯高度依據index分佈
-					),
+					position: {
+						x: Math.random() * (gameWidth - 150) + 75, // 讓階梯集中中央
+						y: i * stairInterval + 100 // 階梯高度依據index分佈
+					},
 					type: easyStairs[parseInt(Math.random() * easyStairs.length)]
 				}
 			);
@@ -94,10 +92,10 @@ class Game {
 			}
 
 			const newStair = {
-				position: new Vector2D(
-					Math.random() * (gameWidth - 150) + 75,
-					gameHeight
-				), // 讓階梯集中中央
+				position: {
+					x: Math.random() * (gameWidth - 150) + 75, // 讓階梯集中中央
+					y: gameHeight
+				},
 				type: weightedRandom(stairTypes, appearWeights),
 			};
 
@@ -113,12 +111,18 @@ class Game {
 			{
 				playerID: 1,
 				master: shuffledMaster[0],
-				position: new Vector2D(gameWidth * 0.33333, 200)
+				position: {
+					x: gameWidth * 0.33333,
+					y: 200
+				}
 			},
 			{
 				playerID: 2,
 				master: shuffledMaster[1],
-				position: new Vector2D(gameWidth * 0.66666, 200)
+				position: {
+					x: gameWidth * 0.66666,
+					y: 200
+				}
 			}
 		];
 
