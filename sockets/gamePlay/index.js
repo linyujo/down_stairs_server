@@ -105,11 +105,12 @@ class Game {
 		}
 	}
 	initialPlayers = () => {
-		const shuffledMaster = shuffleArray([this.player1, this.player2]);
+		const { player1, player2, io } = this;
+		const shuffledMaster = shuffleArray([player1, player2]);
 
 		const initPlayerConfigs = [
 			{
-				playerID: 1,
+				characterID: 1,
 				master: shuffledMaster[0],
 				position: {
 					x: gameWidth * 0.33333,
@@ -117,7 +118,7 @@ class Game {
 				}
 			},
 			{
-				playerID: 2,
+				characterID: 2,
 				master: shuffledMaster[1],
 				position: {
 					x: gameWidth * 0.66666,
@@ -125,6 +126,16 @@ class Game {
 				}
 			}
 		];
+		
+		io.to(shuffledMaster[0]).emit("RIVAL_INFO", {
+			id: shuffledMaster[1],
+			characterID: 2
+		});
+
+		io.to(shuffledMaster[1]).emit("RIVAL_INFO", {
+			id: shuffledMaster[0],
+			characterID: 1
+		});
 
 		return initPlayerConfigs;
 	}

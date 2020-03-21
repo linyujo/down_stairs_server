@@ -29,7 +29,7 @@ const createWebSocket = server => {
 		});
 
 		client.on('UPDATE_RIVAL', payload => {
-			users.handleGameRivalUpdate(payload, client);
+			users.handleGameRivalUpdate(payload, io);
 		});
 
 		client.on('GAME_END', payload => {

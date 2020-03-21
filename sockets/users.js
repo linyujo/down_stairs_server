@@ -66,8 +66,8 @@ const handleUserUpdate = (id, io, roomID = "") => {
 		user: connectedUsers.getOne(id)
 	});
 };
-const handleGameRivalUpdate = (payload, client) => {
-	client.to(payload.roomID).emit("UPDATE_RIVAL", payload);
+const handleGameRivalUpdate = (payload, io) => {
+	io.to(payload.to).emit("UPDATE_RIVAL", payload);
 }
 const handleDisconnect = (io, client) => {
 	// const leavingUser = connectedUsers.getOne(client.id);
