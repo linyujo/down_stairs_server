@@ -72,7 +72,7 @@ const handleGameRivalUpdate = (payload, io) => {
 const handleDisconnect = (io, client) => {
 	// const leavingUser = connectedUsers.getOne(client.id);
 	// if (leavingUser.room) {
-	// 	io.in(leavingUser.room).emit('GAME_END');
+	// 	client.leave(leavingUser.room);
 	// }
 	connectedUsers.deleteOne(client.id);
 	io.sockets.emit('DELETE_ONE_USER', {
