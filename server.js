@@ -2,7 +2,7 @@
 import Koa from 'koa';
 import bodyParser from 'koa-bodyparser';
 import helmet from "koa-helmet";
-import morgan from 'koa-morgan';
+// import morgan from 'koa-morgan';
 import fs from "fs";
 import http from 'http';
 import cors from 'koa2-cors';
@@ -12,7 +12,7 @@ import { processStart } from './utils';
 import createWebSocket from './sockets';
 
 // create a write stream (in append mode)
-const accessLogStream = fs.createWriteStream(__dirname + '/access.log', { flags: 'a' })
+// const accessLogStream = fs.createWriteStream(__dirname + '/access.log', { flags: 'a' })
 
 const app = new Koa();
 
@@ -25,9 +25,9 @@ app.use(async (ctx, next) => {
 	const ms = Date.now() - start_time;
 	console.log(`${ctx.method} ${ctx.url} - ${ms}ms`);
 });
-app.use(morgan('combined', {
-	stream: accessLogStream,
-}))
+// app.use(morgan('combined', {
+// 	stream: accessLogStream,
+// }))
 app.use(cors({
 	origin: function(ctx) {
 		return 'https://goingdownstairs.netlify.com';
