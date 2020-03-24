@@ -8,7 +8,7 @@
     "node": ">= 10.15.2"
   },
   "scripts": {
-    "start": "pm2-runtime start ecosystem.config.js --env production",
+    "start": "NODE_ENV=production && node index.js",
     "dev": "NODE_ENV=development && node index.js"
   },
   "dependencies": {
@@ -25,7 +25,6 @@
     "koa-logger": "^3.2.1",
     "koa-morgan": "^1.0.1",
     "koa2-cors": "^2.0.6",
-    "pm2": "^4.2.3",
     "redis": "^3.0.2",
     "sanitize-html": "^1.21.1",
     "socket.io": "^2.3.0",

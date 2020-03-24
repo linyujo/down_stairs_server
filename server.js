@@ -53,7 +53,7 @@ app.use(async ctx => {
 const server = http.createServer(app.callback());
 createWebSocket(server);
 
-if (process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV === 'production') {
 	// 知道 dyno 有多少 process 可以使用
 	const WORKERS = process.env.WEB_CONCURRENCY || 1;
 
