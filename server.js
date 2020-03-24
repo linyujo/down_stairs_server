@@ -53,14 +53,16 @@ app.use(async ctx => {
 const server = http.createServer(app.callback());
 createWebSocket(server);
 
-// 知道 dyno 有多少 process 可以使用
-const WORKERS = process.env.WEB_CONCURRENCY || 1;
+if (process.env.NODE_ENV === 'development') {
+	// 知道 dyno 有多少 process 可以使用
+	const WORKERS = process.env.WEB_CONCURRENCY || 1;
 
-// 支援cluster
-throng({
-	workers: WORKERS,
-	lifetime: Infinity // 假如一個 worker 死掉了它會自己再爬起來
-}, processStart);
+	// 支援cluster
+	throng({
+		workers: WORKERS,
+		lifetime: Infinity // 假如一個 worker 死掉了它會自己再爬起來
+	}, processStart);
+}
 
 const PORT = process.env.PORT || 4000;
 server.listen(PORT, async () => console.log(`已啟動PORT: ${PORT}!`));

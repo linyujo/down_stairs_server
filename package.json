@@ -8,9 +8,9 @@
     "node": ">= 10.15.2"
   },
   "scripts": {
-    "start": "pm2 start --attach -i 0 ./bin/www && pm2 logs all",
-    "preinstall": "npm i -g pm2 && pm2 install pm2-logrotate",
-    "dev": "node index.js"
+	"start": "pm2 start --attach -i 0 ./bin/www && pm2 logs all",
+	"preinstall": "npm i -g pm2 && pm2 install pm2-logrotate",
+    "dev": "NODE_ENV=development && node index.js"
   },
   "dependencies": {
     "@babel/core": "^7.8.7",
