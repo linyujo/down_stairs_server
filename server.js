@@ -8,7 +8,7 @@ import http from 'http';
 import cors from 'koa2-cors';
 import throng from 'throng';
 
-import { processStart } from 'utils';
+import { processStart } from './utils';
 import createWebSocket from './sockets';
 
 // create a write stream (in append mode)
@@ -59,8 +59,8 @@ const WORKERS = process.env.WEB_CONCURRENCY || 1;
 // 支援cluster
 throng({
 	workers: WORKERS,
-	lifetime: Infinty // 假如一個 worker 死掉了它會自己再爬起來
-  }, start)
+	lifetime: Infinity // 假如一個 worker 死掉了它會自己再爬起來
+}, processStart);
 
 const PORT = process.env.PORT || 4000;
 server.listen(PORT, async () => console.log(`已啟動PORT: ${PORT}!`));
