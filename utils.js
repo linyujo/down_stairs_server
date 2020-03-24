@@ -83,9 +83,15 @@ function shuffleArray(arr){
 	return arr;
 }
 
+/**
+ * 每個 process 開始執行時的進入點
+ */
+function processStart(){}
+
 export {
 	do_Times,
 	Vector2D,
 	weightedRandom,
-	shuffleArray
+	shuffleArray,
+	processStart
 };
