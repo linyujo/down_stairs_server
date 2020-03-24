@@ -8,8 +8,7 @@
     "node": ">= 10.15.2"
   },
   "scripts": {
-	"start": "pm2 start --attach -i 0 ./bin/www && pm2 logs all",
-	"preinstall": "npm i -g pm2 && pm2 install pm2-logrotate",
+    "start": "pm2-runtime start ecosystem.config.js --env production",
     "dev": "NODE_ENV=development && node index.js"
   },
   "dependencies": {
